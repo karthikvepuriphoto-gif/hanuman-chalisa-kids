@@ -1,0 +1,705 @@
+{
+  "app": {
+    "name": "Little Chalisa",
+    "tagline": "Hanuman's story, verse by verse"
+  },
+  "modes": [
+    "learn",
+    "practice"
+  ],
+  "audioMaster": "audio/chalisa-full.m4a",
+  "audioNotes": "Full sung Chalisa ~515s. Opening dohas ~0-41s. Chaupais ~41s-438s. Jai jai jai may repeat ~438-453. Last chaupais ~458-485. Closing doha ~492-end. Clip B (chaupai 25-26) ~305-327s. Fine-tune cuts.",
+  "pieces": [
+    {
+      "id": "doha-1",
+      "order": 1,
+      "kind": "doha",
+      "title": "Opening Doha 1",
+      "lines": [
+        "Shri Guru Charan Saroj Raj",
+        "Nij mane mukure sudhar",
+        "Varnao Raghuvar Vimal Jasu",
+        "Jo dayaku phala chaar"
+      ],
+      "meaning": "Cleansing the mirror of my mind with the dust from the Lotus-feet of Divine Guru, I describe the glory of Lord Rama, which bestows four fruits: Dharma, Artha, Kama and Moksha.",
+      "pictureIdeas": [
+        "Guru's lotus feet dust cleansing a mind-mirror",
+        "Four glowing fruits of life"
+      ]
+    },
+    {
+      "id": "doha-2",
+      "order": 2,
+      "kind": "doha",
+      "title": "Opening Doha 2",
+      "lines": [
+        "Budhi Heen Tanu Janike",
+        "Sumirau Pavan Kumar",
+        "Bal budhi Vidya dehu mohe",
+        "Harahu Kalesa Vikar"
+      ],
+      "meaning": "Knowing I am not very smart, I remember Hanuman, son of the wind, and ask for strength, intelligence and true knowledge to clear my troubles.",
+      "pictureIdeas": [
+        "Child asking Hanuman for help",
+        "Gifts of strength, smarts, and learning"
+      ]
+    },
+    {
+      "id": "chaupai-1",
+      "order": 3,
+      "kind": "chaupai",
+      "n": 1,
+      "title": "Chaupai 1",
+      "lines": [
+        "Jai Hanuman gyan gun sagar",
+        "Jai Kapis tihun lok ujagar"
+      ],
+      "meaning": "Victory to Hanuman, ocean of wisdom and virtues. Victory to the monkey king who lights up the three worlds.",
+      "pictureIdeas": [
+        "Ocean of light/wisdom",
+        "Hanuman lighting three worlds"
+      ]
+    },
+    {
+      "id": "chaupai-2",
+      "order": 4,
+      "kind": "chaupai",
+      "n": 2,
+      "title": "Chaupai 2",
+      "lines": [
+        "Ram doot atulit bal dhama",
+        "Anjani-putra Pavan sut nama"
+      ],
+      "meaning": "You are Rama's messenger and home of unmatched power. You are Anjani's son and son of the wind.",
+      "pictureIdeas": [
+        "Messenger carrying a letter",
+        "Wind and mother Anjani with baby Hanuman"
+      ]
+    },
+    {
+      "id": "chaupai-3",
+      "order": 5,
+      "kind": "chaupai",
+      "n": 3,
+      "title": "Chaupai 3",
+      "lines": [
+        "Mahavir Vikram Bajrangi",
+        "Kumati nivar sumati Ke sangi"
+      ],
+      "meaning": "Mighty brave one with diamond-strong body. Clear bad thoughts; friend of good minds.",
+      "pictureIdeas": [
+        "Strong Hanuman hero pose",
+        "Bad cloud leaving; good thoughts friends"
+      ]
+    },
+    {
+      "id": "chaupai-4",
+      "order": 6,
+      "kind": "chaupai",
+      "n": 4,
+      "title": "Chaupai 4",
+      "lines": [
+        "Kanchan varan viraj subesa",
+        "Kanan Kundal Kunchit Kesa"
+      ],
+      "meaning": "Golden colored, shining in beautiful clothes, earrings, and curly hair.",
+      "pictureIdeas": [
+        "Golden shining Hanuman",
+        "Earrings and curly hair close-up"
+      ]
+    },
+    {
+      "id": "chaupai-5",
+      "order": 7,
+      "kind": "chaupai",
+      "n": 5,
+      "title": "Chaupai 5",
+      "lines": [
+        "Hath Vajra Aur Dhuvaje Viraje",
+        "Kandhe moonj janehu sajai"
+      ],
+      "meaning": "Mace and flag shine in your hand; sacred thread of munja grass on your shoulder.",
+      "pictureIdeas": [
+        "Mace and flag",
+        "Sacred thread on shoulder"
+      ]
+    },
+    {
+      "id": "chaupai-6",
+      "order": 8,
+      "kind": "chaupai",
+      "n": 6,
+      "title": "Chaupai 6",
+      "lines": [
+        "Sankar suvan kesri Nandan",
+        "Tej pratap maha jag vandan"
+      ],
+      "meaning": "Incarnation of Shiva, son of Kesari; the whole world honors your glory.",
+      "pictureIdeas": [
+        "Shiva blessing / Kesari father",
+        "World bowing in respect"
+      ]
+    },
+    {
+      "id": "chaupai-7",
+      "order": 9,
+      "kind": "chaupai",
+      "n": 7,
+      "title": "Chaupai 7",
+      "lines": [
+        "Vidyavan guni ati chatur",
+        "Ram kaj karibe ko aatur"
+      ],
+      "meaning": "Learned, full of virtues, very clever; always eager to do Rama's work.",
+      "pictureIdeas": [
+        "Books and clever smile",
+        "Eager to help Rama"
+      ]
+    },
+    {
+      "id": "chaupai-8",
+      "order": 10,
+      "kind": "chaupai",
+      "n": 8,
+      "title": "Chaupai 8",
+      "lines": [
+        "Prabu charitra sunibe ko rasiya",
+        "Ram Lakhan Sita man Basiya"
+      ],
+      "meaning": "You love hearing Rama's story; Rama, Lakshman and Sita live in your heart.",
+      "pictureIdeas": [
+        "Listening happily to a story",
+        "Heart with Ram, Sita, Lakshman"
+      ]
+    },
+    {
+      "id": "chaupai-9",
+      "order": 11,
+      "kind": "chaupai",
+      "n": 9,
+      "title": "Chaupai 9",
+      "lines": [
+        "Sukshma roop dhari Siyahi dikhava",
+        "Vikat roop dhari lanka jarava"
+      ],
+      "meaning": "In tiny form you met Sita; in giant form you burned Lanka.",
+      "pictureIdeas": [
+        "Tiny Hanuman meeting Sita",
+        "Giant Hanuman and Lanka flames"
+      ]
+    },
+    {
+      "id": "chaupai-10",
+      "order": 12,
+      "kind": "chaupai",
+      "n": 10,
+      "title": "Chaupai 10",
+      "lines": [
+        "Bhima roop dhari asur samhare",
+        "Ramachandra ke kaj sanvare"
+      ],
+      "meaning": "In a fierce form you defeated demons and made Rama's work easier.",
+      "pictureIdeas": [
+        "Fierce Hanuman vs demons",
+        "Helping Rama succeed"
+      ]
+    },
+    {
+      "id": "chaupai-11",
+      "order": 13,
+      "kind": "chaupai",
+      "n": 11,
+      "title": "Chaupai 11",
+      "lines": [
+        "Laye Sanjivan Lakhan Jiyaye",
+        "Shri Raghuvir Harashi ur laye"
+      ],
+      "meaning": "You brought the Sanjeevani mountain and saved Lakshman; Rama hugged you with joy.",
+      "pictureIdeas": [
+        "Carrying a mountain",
+        "Joyful hug with Rama"
+      ]
+    },
+    {
+      "id": "chaupai-12",
+      "order": 14,
+      "kind": "chaupai",
+      "n": 12,
+      "title": "Chaupai 12",
+      "lines": [
+        "Raghupati Kinhi bahut badai",
+        "Tum mam priye Bharat-hi sam bhai"
+      ],
+      "meaning": "Rama praised you: you are as dear to me as my brother Bharata.",
+      "pictureIdeas": [
+        "Rama praising Hanuman",
+        "Brothers side by side warmth"
+      ]
+    },
+    {
+      "id": "chaupai-13",
+      "order": 15,
+      "kind": "chaupai",
+      "n": 13,
+      "title": "Chaupai 13",
+      "lines": [
+        "Sahas vadan tumharo yash gaave",
+        "As kahi Shripati kanth lagaave"
+      ],
+      "meaning": "Thousands sing your glory; saying so, Rama hugged you.",
+      "pictureIdeas": [
+        "Many beings singing",
+        "Warm embrace"
+      ]
+    },
+    {
+      "id": "chaupai-14",
+      "order": 16,
+      "kind": "chaupai",
+      "n": 14,
+      "title": "Chaupai 14",
+      "lines": [
+        "Sankadik Brahmadi Muneesa",
+        "Narad Sarad sahit Aheesa"
+      ],
+      "meaning": "Sages Sanaka, Brahma, Narad, Saraswati and Adishesha…",
+      "pictureIdeas": [
+        "Gathering of sages and gods",
+        "Saraswati and Narad"
+      ]
+    },
+    {
+      "id": "chaupai-15",
+      "order": 17,
+      "kind": "chaupai",
+      "n": 15,
+      "title": "Chaupai 15",
+      "lines": [
+        "Yam Kuber Digpal Jahan te",
+        "Kavi kovid kahi sake kahan te"
+      ],
+      "meaning": "Even Yama, Kubera, direction guardians, poets and singers cannot fully describe your greatness.",
+      "pictureIdeas": [
+        "Gods trying to speak",
+        "Words falling short stars"
+      ]
+    },
+    {
+      "id": "chaupai-16",
+      "order": 18,
+      "kind": "chaupai",
+      "n": 16,
+      "title": "Chaupai 16",
+      "lines": [
+        "Tum upkar Sugreevahin keenha",
+        "Ram milaye rajpad deenha"
+      ],
+      "meaning": "You helped Sugreeva meet Rama and get his kingdom back.",
+      "pictureIdeas": [
+        "Introducing friends",
+        "Crown returned to Sugreeva"
+      ]
+    },
+    {
+      "id": "chaupai-17",
+      "order": 19,
+      "kind": "chaupai",
+      "n": 17,
+      "title": "Chaupai 17",
+      "lines": [
+        "Tumharo mantra Vibheeshan mana",
+        "Lankeshwar Bhaye Sub jag jana"
+      ],
+      "meaning": "Vibheeshana took your advice and became king of Lanka; the world knows.",
+      "pictureIdeas": [
+        "Advice whisper",
+        "Vibheeshana crowned"
+      ]
+    },
+    {
+      "id": "chaupai-18",
+      "order": 20,
+      "kind": "chaupai",
+      "n": 18,
+      "title": "Chaupai 18",
+      "lines": [
+        "Yug sahastra jojan par Bhanu",
+        "Leelyo tahi madhur phal janu"
+      ],
+      "meaning": "You flew toward the sun far away, thinking it was a sweet fruit.",
+      "pictureIdeas": [
+        "Child Hanuman flying to sun-fruit",
+        "Glowing fruit-sun"
+      ]
+    },
+    {
+      "id": "chaupai-19",
+      "order": 21,
+      "kind": "chaupai",
+      "n": 19,
+      "title": "Chaupai 19",
+      "lines": [
+        "Prabhu mudrika meli mukh mahee",
+        "Jaladhi langhi gaye achraj nahee"
+      ],
+      "meaning": "With Rama's ring in your mouth you leapt the ocean — no surprise.",
+      "pictureIdeas": [
+        "Ring in mouth",
+        "Leap over big ocean"
+      ]
+    },
+    {
+      "id": "chaupai-20",
+      "order": 22,
+      "kind": "chaupai",
+      "n": 20,
+      "title": "Chaupai 20",
+      "lines": [
+        "Durgaam kaj jagat ke jete",
+        "Sugam anugraha tumhre tete"
+      ],
+      "meaning": "Hard tasks in the world become easy with your grace.",
+      "pictureIdeas": [
+        "Hard rocky path becoming smooth",
+        "Grace light helping a child"
+      ]
+    },
+    {
+      "id": "chaupai-21",
+      "order": 23,
+      "kind": "chaupai",
+      "n": 21,
+      "title": "Chaupai 21",
+      "lines": [
+        "Ram dware tum rakhvare",
+        "Hoat na agya binu paisare"
+      ],
+      "meaning": "You guard Rama's door; none enter without your say.",
+      "pictureIdeas": [
+        "Doorkeeper Hanuman",
+        "Gate of Rama's home"
+      ]
+    },
+    {
+      "id": "chaupai-22",
+      "order": 24,
+      "kind": "chaupai",
+      "n": 22,
+      "title": "Chaupai 22",
+      "lines": [
+        "Sub sukh lahai tumhari sarna",
+        "Tum rakshak kahu ko dar na"
+      ],
+      "meaning": "All who take refuge in you find happiness; with you as protector, why fear?",
+      "pictureIdeas": [
+        "Safe shelter under Hanuman",
+        "Fear melting away"
+      ]
+    },
+    {
+      "id": "chaupai-23",
+      "order": 25,
+      "kind": "chaupai",
+      "n": 23,
+      "title": "Chaupai 23",
+      "lines": [
+        "Aapan tej samharo aapai",
+        "Teenhon lok hank te kanpai"
+      ],
+      "meaning": "Only you can hold your own power; the three worlds tremble at your roar.",
+      "pictureIdeas": [
+        "Power held in calm hands",
+        "Three worlds trembling gently"
+      ]
+    },
+    {
+      "id": "chaupai-24",
+      "order": 26,
+      "kind": "chaupai",
+      "n": 24,
+      "title": "Chaupai 24",
+      "lines": [
+        "Bhoot pisach Nikat nahin aavai",
+        "Mahavir jab naam sunavai"
+      ],
+      "meaning": "Evil spirits stay away when your brave name is heard.",
+      "pictureIdeas": [
+        "Scary shadows fleeing",
+        "Name glowing as shield"
+      ]
+    },
+    {
+      "id": "chaupai-25",
+      "order": 27,
+      "kind": "chaupai",
+      "n": 25,
+      "title": "Chaupai 25",
+      "lines": [
+        "Nase rog harai sab peera",
+        "Japat nirantar Hanumant beera"
+      ],
+      "meaning": "Illness and pain fade when one keeps saying brave Hanuman's name.",
+      "pictureIdeas": [
+        "Healing light",
+        "Child repeating name peacefully"
+      ]
+    },
+    {
+      "id": "chaupai-26",
+      "order": 28,
+      "kind": "chaupai",
+      "n": 26,
+      "title": "Chaupai 26",
+      "lines": [
+        "Sankat se Hanuman chudavai",
+        "Man Krama Vachan dyan jo lavai"
+      ],
+      "meaning": "Hanuman frees from trouble those who remember him in mind, actions and words.",
+      "pictureIdeas": [
+        "Breaking free from a tangle",
+        "Mind, hands, and mouth aligned"
+      ]
+    },
+    {
+      "id": "chaupai-27",
+      "order": 29,
+      "kind": "chaupai",
+      "n": 27,
+      "title": "Chaupai 27",
+      "lines": [
+        "Sub par Ram tapasvee raja",
+        "Tin ke kaj sakal Tum saja"
+      ],
+      "meaning": "Rama is the great king of yogis; you arrange all his tasks.",
+      "pictureIdeas": [
+        "Rama as king of yogis",
+        "Hanuman arranging work"
+      ]
+    },
+    {
+      "id": "chaupai-28",
+      "order": 30,
+      "kind": "chaupai",
+      "n": 28,
+      "title": "Chaupai 28",
+      "lines": [
+        "Aur manorath jo koi lavai",
+        "Sohi amit jeevan phal pavai"
+      ],
+      "meaning": "Whoever brings wishes to you receives endless life-fruits.",
+      "pictureIdeas": [
+        "Wishes as stars",
+        "Abundant fruits raining gently"
+      ]
+    },
+    {
+      "id": "chaupai-29",
+      "order": 31,
+      "kind": "chaupai",
+      "n": 29,
+      "title": "Chaupai 29",
+      "lines": [
+        "Charon Yug partap tumhara",
+        "Hai prasidha jagat ujiyara"
+      ],
+      "meaning": "Your glory shines through all four ages and lights the world.",
+      "pictureIdeas": [
+        "Four ages timeline",
+        "World lit bright"
+      ]
+    },
+    {
+      "id": "chaupai-30",
+      "order": 32,
+      "kind": "chaupai",
+      "n": 30,
+      "title": "Chaupai 30",
+      "lines": [
+        "Sadhu Sant ke tum Rakhware",
+        "Asur nikandan Ram dulhare"
+      ],
+      "meaning": "Guardian of good people; slayer of demons; dear to Rama.",
+      "pictureIdeas": [
+        "Protecting kind people",
+        "Dear to Rama"
+      ]
+    },
+    {
+      "id": "chaupai-31",
+      "order": 33,
+      "kind": "chaupai",
+      "n": 31,
+      "title": "Chaupai 31",
+      "lines": [
+        "Ashta sidhi nav nidhi ke dhata",
+        "As var deen Janki mata"
+      ],
+      "meaning": "Mother Sita gave you the boon to grant eight powers and nine treasures.",
+      "pictureIdeas": [
+        "Sita giving a blessing",
+        "Eight powers and nine treasures icons"
+      ]
+    },
+    {
+      "id": "chaupai-32",
+      "order": 34,
+      "kind": "chaupai",
+      "n": 32,
+      "title": "Chaupai 32",
+      "lines": [
+        "Ram rasayan tumhare pasa",
+        "Sada raho Raghupati ke dasa"
+      ],
+      "meaning": "You hold the sweetness of devotion to Rama; always stay his devotee.",
+      "pictureIdeas": [
+        "Sweet devotion jar",
+        "Humble devotee of Rama"
+      ]
+    },
+    {
+      "id": "chaupai-33",
+      "order": 35,
+      "kind": "chaupai",
+      "n": 33,
+      "title": "Chaupai 33",
+      "lines": [
+        "Tumhare bhajan Ram ko pavai",
+        "Janam janam ke dukh bisravai"
+      ],
+      "meaning": "Singing of you leads to Rama and lifts sorrows of many lives.",
+      "pictureIdeas": [
+        "Singing together",
+        "Sorrows floating away"
+      ]
+    },
+    {
+      "id": "chaupai-34",
+      "order": 36,
+      "kind": "chaupai",
+      "n": 34,
+      "title": "Chaupai 34",
+      "lines": [
+        "Anth kaal Raghuvir pur jayee",
+        "Jahan janam Hari-Bakht Kahayee"
+      ],
+      "meaning": "At life's end one reaches Rama's city and is born as Rama's devotee.",
+      "pictureIdeas": [
+        "Peaceful journey home",
+        "City of light"
+      ]
+    },
+    {
+      "id": "chaupai-35",
+      "order": 37,
+      "kind": "chaupai",
+      "n": 35,
+      "title": "Chaupai 35",
+      "lines": [
+        "Aur Devta Chit na dharehi",
+        "Hanumanth se hi sarve sukh karehi"
+      ],
+      "meaning": "Focusing on Hanuman brings all happiness.",
+      "pictureIdeas": [
+        "Happy heart with Hanuman",
+        "Joyful child"
+      ]
+    },
+    {
+      "id": "chaupai-36",
+      "order": 38,
+      "kind": "chaupai",
+      "n": 36,
+      "title": "Chaupai 36",
+      "lines": [
+        "Sankat kate mite sab peera",
+        "Jo sumirai Hanumat Balbeera"
+      ],
+      "meaning": "Troubles and pain leave those who remember mighty brave Hanuman.",
+      "pictureIdeas": [
+        "Troubles cut like a rope",
+        "Remembering bravely"
+      ]
+    },
+    {
+      "id": "chaupai-37",
+      "order": 39,
+      "kind": "chaupai",
+      "n": 37,
+      "title": "Chaupai 37",
+      "lines": [
+        "Jai Jai Jai Hanuman Gosahin",
+        "Kripa Karahu Gurudev ki nyahin"
+      ],
+      "meaning": "Victory! Show kindness like a guru.",
+      "pictureIdeas": [
+        "Triple victory cheer",
+        "Gentle guru kindness"
+      ]
+    },
+    {
+      "id": "chaupai-38",
+      "order": 40,
+      "kind": "chaupai",
+      "n": 38,
+      "title": "Chaupai 38",
+      "lines": [
+        "Jo sat bar path kare kohi",
+        "Chutehi bandhi maha sukh hohi"
+      ],
+      "meaning": "Whoever recites a hundred times, bonds break and great joy comes.",
+      "pictureIdeas": [
+        "Counting beads to 100",
+        "Chains opening to joy"
+      ]
+    },
+    {
+      "id": "chaupai-39",
+      "order": 41,
+      "kind": "chaupai",
+      "n": 39,
+      "title": "Chaupai 39",
+      "lines": [
+        "Jo yah padhe Hanuman Chalisa",
+        "Hoye siddhi sakhi Gaureesa"
+      ],
+      "meaning": "Whoever reads this Chalisa gains attainment; Lord Shiva is witness.",
+      "pictureIdeas": [
+        "Reading the Chalisa book",
+        "Shiva as witness"
+      ]
+    },
+    {
+      "id": "chaupai-40",
+      "order": 42,
+      "kind": "chaupai",
+      "n": 40,
+      "title": "Chaupai 40",
+      "lines": [
+        "Tulsidas sada hari chera",
+        "Keejai Natha Hrdaye mein dera"
+      ],
+      "meaning": "Tulsidas is always Rama's devotee; Lord, please live in my heart.",
+      "pictureIdeas": [
+        "Poet Tulsidas",
+        "Heart-home for the Lord"
+      ]
+    },
+    {
+      "id": "doha-close",
+      "order": 43,
+      "kind": "doha",
+      "title": "Closing Doha",
+      "lines": [
+        "Pavantnai sankat haran,",
+        "Mangal murti roop.",
+        "Ram Lakhan Sita sahit,",
+        "Hrdaye basahu sur bhoop."
+      ],
+      "meaning": "O son of the wind, remover of troubles, auspicious form — with Ram, Lakshman and Sita, please live in our hearts, O king of gods.",
+      "pictureIdeas": [
+        "Warm heart home",
+        "Ram, Sita, Lakshman and Hanuman together"
+      ]
+    }
+  ]
+}
