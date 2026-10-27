@@ -151,7 +151,7 @@ export const storyboard: Record<string, [SceneSpec, SceneSpec]> = {
       item('mountain', 100, 150, 1.05, { main: true }),
       item('hanuman', 100, 196, 0.55, { pose: 'fly' }),
     ]),
-    scene('garden', 'bounce', [
+    scene('garden', 'heartbeat', [
       item('rama', 78, 174, 0.85),
       item('hanuman', 132, 178, 0.85, { pose: 'glow', main: true }),
       item('lakshman', 168, 188, 0.5),
@@ -222,7 +222,7 @@ export const storyboard: Record<string, [SceneSpec, SceneSpec]> = {
     ]),
   ],
   'chaupai-18': [
-    scene('sky', 'float', [
+    scene('sky', 'rise', [
       item('hanuman', 70, 180, 0.7, { pose: 'fly', main: true }),
       item('sunfruit', 148, 90, 0.7, { main: true }),
     ]),

@@ -243,6 +243,11 @@ export function App() {
         </div>
       </header>
 
+      {coach && (
+        <p className="tap-hint" role="status">
+          Tap pictures
+        </p>
+      )}
       <div className="stage min-h-0 flex-1">
         <PictureButton side="left" idea={piece.pictureIdeas[0]} scene={leftScene} onTap={dismissCoach} />
         <section className="area-verse verse-card flex flex-col px-4 py-4 md:px-8 md:py-6" aria-live="polite">
@@ -313,9 +318,6 @@ export function App() {
             <div className="h-full rounded-full bg-saffron" style={{ width: `${Math.min(100, ratio * 100)}%` }} />
           </div>
           <p className="hint mt-2 text-center text-sm font-bold text-maroon/80">{hint || status}</p>
-          {coach && (
-            <p className="text-center text-sm font-extrabold text-deep">Tap a picture and it will do a little dance.</p>
-          )}
           {mode === 'practice' && piece.order !== 1 && (
             <button type="button" className="mx-auto mt-1 text-sm font-extrabold text-deep underline" onClick={() => goTo(1, true)}>
               Practice from the very start
