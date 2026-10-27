@@ -1,6 +1,12 @@
-import { execFileSync } from 'node:child_process'
+import { execFileSync, spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
+
+const ffprobe = spawnSync('ffprobe', ['-version'], { stdio: 'ignore' })
+const canProbe = !ffprobe.error && ffprobe.status === 0
+if (!canProbe) {
+  console.log('ffprobe not found; skipping audio duration checks')
+}
 
 const root = path.resolve(import.meta.dirname, '..')
 const pieces = JSON.parse(fs.readFileSync(path.join(root, 'src/data/pieces.json'), 'utf8')).pieces
@@ -22,6 +28,7 @@ for (const piece of pieces) {
   if (!scenes.includes(`'${piece.id}'`)) fail(`storyboard missing ${piece.id}`)
   const audioPath = path.join(root, 'public/audio', `${piece.id}.m4a`)
   if (!fs.existsSync(audioPath)) fail(`missing audio file ${piece.id}`)
+  if (!canProbe) continue
   const probed = Number(
     execFileSync('ffprobe', [
       '-v',

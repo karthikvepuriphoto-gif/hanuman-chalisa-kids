@@ -23,6 +23,8 @@ npm test
 npm run dev
 ```
 
+`npm test` still checks the 43 pieces, pictures, and audio files when `ffprobe` is not installed. With `ffprobe` on the PATH it also checks that each file’s duration matches its cut.
+
 The dev server uses the GitHub Pages base path, so open `http://localhost:5173/hanuman-chalisa-kids/`.
 
 ```bash
