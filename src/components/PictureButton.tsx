@@ -26,7 +26,7 @@ export function PictureButton({ idea, scene, side, onTap }: Props) {
     timer.current = window.setTimeout(() => {
       button.classList.remove('is-lit')
       svg.classList.remove('is-tapped')
-    }, 1700)
+    }, 1900)
     onTap?.()
   }
 
@@ -34,7 +34,7 @@ export function PictureButton({ idea, scene, side, onTap }: Props) {
     <button
       ref={buttonRef}
       type="button"
-      className={`pic-btn area-${side}`}
+      className={`pic-btn area-${side} motion-${scene.anim}`}
       aria-label={`${idea}. Tap for a short animation.`}
       onClick={tap}
     >
