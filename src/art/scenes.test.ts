@@ -5,7 +5,7 @@ import { storyboard } from './scenes.ts'
 
 const ANIM = new Set(['float', 'glow', 'bounce', 'sparkle', 'sway', 'pop', 'rise', 'heartbeat'])
 
-test('storyboard covers every piece with two tappable pictures', () => {
+test('storyboard covers every piece with four tappable pictures', () => {
   const raw = JSON.parse(fs.readFileSync(new URL('../data/pieces.json', import.meta.url), 'utf8')) as {
     pieces: { id: string }[]
   }
@@ -14,7 +14,7 @@ test('storyboard covers every piece with two tappable pictures', () => {
   for (const piece of raw.pieces) {
     const pair = storyboard[piece.id]
     assert.ok(pair, piece.id)
-    assert.equal(pair.length, 2, piece.id)
+    assert.equal(pair.length, 4, piece.id)
     for (const scene of pair) {
       assert.ok(ANIM.has(scene.anim), `${piece.id} ${scene.anim}`)
       assert.ok(scene.items.length > 0, piece.id)

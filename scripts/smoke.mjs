@@ -50,8 +50,13 @@ const fitted = await page.evaluate(() => {
 if (fitted.scrollWidth > fitted.innerWidth + 2) throw new Error(`horizontal overflow ${fitted.scrollWidth}`)
 if (fitted.footerBottom > fitted.innerHeight + 2) throw new Error(`footer below the fold ${fitted.footerBottom}`)
 if (fitted.playBottom > fitted.innerHeight) throw new Error('play button below the fold')
-if (fitted.pics.length !== 2 || fitted.pics.some((pic) => pic.w < 140 || pic.h < 180)) {
+if (fitted.pics.length !== 4 || fitted.pics.some((pic) => pic.w < 120 || pic.h < 120)) {
   throw new Error(`pictures too small ${JSON.stringify(fitted.pics)}`)
+}
+const leftXs = fitted.pics.filter((pic) => pic.x < fitted.innerWidth / 2)
+const rightXs = fitted.pics.filter((pic) => pic.x > fitted.innerWidth / 2)
+if (leftXs.length !== 2 || rightXs.length !== 2) {
+  throw new Error(`expected two tiles each side ${JSON.stringify(fitted.pics)}`)
 }
 if (fitted.text.includes('Practice from the very start')) {
   throw new Error('start-over control showed up during Learn')
@@ -159,10 +164,11 @@ const phone = await page.evaluate(() => {
   return { pics, playTop: play?.top ?? 0, scrollWidth: document.documentElement.scrollWidth, innerWidth: window.innerWidth }
 })
 if (phone.scrollWidth > phone.innerWidth + 2) throw new Error(`phone horizontal overflow ${phone.scrollWidth}`)
-if (phone.pics.length !== 2 || Math.abs(phone.pics[0].y - phone.pics[1].y) > 8) {
-  throw new Error(`phone pictures should sit side by side ${JSON.stringify(phone.pics)}`)
+if (phone.pics.length !== 4) {
+  throw new Error(`phone should show four tiles ${JSON.stringify(phone.pics)}`)
 }
-if (phone.playTop < phone.pics[0].bottom - 4) throw new Error('play button should follow the pictures on a phone')
+const phoneRows = new Set(phone.pics.map((pic) => Math.round(pic.y / 8)))
+if (phoneRows.size < 2) throw new Error(`phone tiles should stack in two rows ${JSON.stringify(phone.pics)}`)
 await shot('iphone-stacked')
 
 await page.setViewport({ width: 844, height: 390, deviceScaleFactor: 2 })
