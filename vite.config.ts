@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icons/icon-192.png', 'icons/icon-512.png'],
       manifest: {
-        name: 'Little Chalisa',
-        short_name: 'Little Chalisa',
+        name: 'Hanuman Chalisa',
+        short_name: 'Hanuman Chalisa',
         description: "Hanuman's story, verse by verse — a gentle way for children to learn the Hanuman Chalisa.",
         theme_color: '#C8482A',
         background_color: '#FFF6EA',
