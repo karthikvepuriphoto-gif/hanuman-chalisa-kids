@@ -1,4 +1,4 @@
-# Little Chalisa
+# Hanuman Chalisa
 
 A children’s Hanuman Chalisa learning app. It is a touch-friendly offline PWA aimed at an iPad in landscape, and it also stacks on a phone.
 
