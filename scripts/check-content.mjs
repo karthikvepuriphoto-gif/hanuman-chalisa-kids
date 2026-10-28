@@ -51,6 +51,9 @@ const orders = pieces.map((piece) => piece.order)
 for (let n = 1; n <= 43; n += 1) {
   if (!orders.includes(n)) fail(`missing order ${n}`)
 }
+const tiles = fs.readdirSync(path.join(root, 'public/art/tiles')).filter((name) => name.endsWith('.webp'))
+if (tiles.length !== 172) fail(`expected 172 story tiles, found ${tiles.length}`)
+
 if (pieces.filter((piece) => piece.kind === 'doha').length !== 3) fail('expected 3 dohas')
 if (pieces.filter((piece) => piece.kind === 'chaupai').length !== 40) fail('expected 40 chaupais')
 

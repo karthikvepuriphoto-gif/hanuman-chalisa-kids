@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { PictureButton } from './components/PictureButton'
-import { audioUrl, pieceIds, pieceLabel, pieces, appName, tagline } from './data/pieces'
+import { audioUrl, pieceIds, pieceLabel, pieces, appName, tagline, tileUrl } from './data/pieces'
 import {
-  COACH_KEY,
   bumpHeard,
   loadSave,
   unlockedThrough,
   writeSave,
   type Mode,
 } from './progress'
-import { scenesFor } from './art/scenes'
 
 const TOTAL = pieces.length
 
@@ -23,13 +21,6 @@ export function App() {
   const [hint, setHint] = useState('')
   const [finished, setFinished] = useState(false)
   const [audioError, setAudioError] = useState(false)
-  const [coach, setCoach] = useState(() => {
-    try {
-      return localStorage.getItem(COACH_KEY) !== 'off'
-    } catch {
-      return true
-    }
-  })
 
   const audioRef = useRef<HTMLAudioElement>(null)
   const heardRef = useRef(heardThrough)
@@ -43,7 +34,6 @@ export function App() {
   const piece = pieces.find((item) => item.id === pieceId) ?? pieces[0]
   pieceRef.current = piece
   const openThrough = unlockedThrough(heardThrough, TOTAL)
-  const tiles = scenesFor(piece.id)
 
   useEffect(() => {
     writeSave({ v: 1, heardThrough, pieceId, mode })
@@ -178,16 +168,6 @@ export function App() {
     if (audio) audio.loop = next === 'learn'
   }
 
-  function dismissCoach() {
-    if (!coach) return
-    setCoach(false)
-    try {
-      localStorage.setItem(COACH_KEY, 'off')
-    } catch {
-      /* ignore */
-    }
-  }
-
   function onTime() {
     const audio = audioRef.current
     if (!audio || audio.dataset.id !== pieceRef.current.id) return
@@ -246,20 +226,15 @@ export function App() {
         </div>
       </header>
 
-      {coach && (
-        <p className="tap-hint" role="status">
-          Tap pictures
-        </p>
-      )}
       <div className="stage min-h-0 flex-1">
         <div className="story-sides">
           <div className="tile-rail area-left">
-            <PictureButton side="left" idea={piece.pictureIdeas[0]} scene={tiles[0]} onTap={dismissCoach} />
-            <PictureButton side="left" idea={piece.pictureIdeas[1]} scene={tiles[1]} onTap={dismissCoach} />
+            <PictureButton side="left" idea={piece.pictureIdeas[0]} src={tileUrl(piece.id, 0)} />
+            <PictureButton side="left" idea={piece.pictureIdeas[1]} src={tileUrl(piece.id, 1)} />
           </div>
           <div className="tile-rail area-right">
-            <PictureButton side="right" idea={piece.pictureIdeas[2]} scene={tiles[2]} onTap={dismissCoach} />
-            <PictureButton side="right" idea={piece.pictureIdeas[3]} scene={tiles[3]} onTap={dismissCoach} />
+            <PictureButton side="right" idea={piece.pictureIdeas[2]} src={tileUrl(piece.id, 2)} />
+            <PictureButton side="right" idea={piece.pictureIdeas[3]} src={tileUrl(piece.id, 3)} />
           </div>
         </div>
         <section className="area-verse verse-card flex flex-col px-4 py-4 md:px-8 md:py-6" aria-live="polite">

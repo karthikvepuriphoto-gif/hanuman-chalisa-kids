@@ -62,12 +62,6 @@ if (fitted.text.includes('Practice from the very start')) {
   throw new Error('start-over control showed up during Learn')
 }
 
-await page.click('.pic-btn')
-await page.waitForSelector('.story-art.is-tapped')
-await shot('ipad-tap')
-const playingDuringTap = await page.$eval('audio', (audio) => !audio.paused)
-if (playingDuringTap) throw new Error('tap started audio by itself')
-
 await page.click('.play-btn')
 await page.waitForFunction(() => {
   const audio = document.querySelector('audio')
