@@ -70,3 +70,7 @@ export function pieceLabel(piece: Piece): string {
 export function audioUrl(id: string): string {
   return `${import.meta.env.BASE_URL}audio/${id}.m4a`
 }
+
+export function tileUrl(id: string, index: number): string {
+  return `${import.meta.env.BASE_URL}art/tiles/${id}-${index}.webp`
+}
