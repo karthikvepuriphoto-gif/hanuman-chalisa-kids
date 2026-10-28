@@ -11,7 +11,7 @@ export type Piece = {
   title: string
   lines: string[]
   meaning: string
-  pictureIdeas: [string, string]
+  pictureIdeas: [string, string, string, string]
   /** Seconds into the master recording, kept so cuts can be fine-tuned. */
   start: number
   end: number
@@ -36,7 +36,7 @@ export const tagline = raw.app.tagline
 export const pieces: Piece[] = (raw.pieces as RawPiece[]).map((piece) => {
   const span = spans[piece.id]
   if (!span) throw new Error(`Missing audio timing for ${piece.id}`)
-  if (piece.pictureIdeas.length < 2) throw new Error(`Need two pictures for ${piece.id}`)
+  if (piece.pictureIdeas.length !== 4) throw new Error(`Need four pictures for ${piece.id}`)
   if (piece.lines.length < 2) throw new Error(`Need verse lines for ${piece.id}`)
   const kind: PieceKind = piece.kind === 'doha' ? 'doha' : 'chaupai'
   return {
@@ -47,7 +47,12 @@ export const pieces: Piece[] = (raw.pieces as RawPiece[]).map((piece) => {
     title: piece.title,
     lines: piece.lines,
     meaning: piece.meaning,
-    pictureIdeas: [piece.pictureIdeas[0], piece.pictureIdeas[1]],
+    pictureIdeas: [
+      piece.pictureIdeas[0],
+      piece.pictureIdeas[1],
+      piece.pictureIdeas[2],
+      piece.pictureIdeas[3],
+    ],
     start: span[0],
     end: span[1],
   }

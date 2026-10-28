@@ -20,7 +20,7 @@ for (const piece of pieces) {
   if (ids.has(piece.id)) fail(`duplicate id ${piece.id}`)
   ids.add(piece.id)
   if (!piece.lines?.length || !piece.meaning) fail(`missing text for ${piece.id}`)
-  if (piece.pictureIdeas?.length !== 2) fail(`need two picture ideas for ${piece.id}`)
+  if (piece.pictureIdeas?.length !== 4) fail(`need four picture ideas for ${piece.id}`)
   const span = timing[piece.id]
   if (!span) fail(`missing timing for ${piece.id}`)
   const duration = span[1] - span[0]

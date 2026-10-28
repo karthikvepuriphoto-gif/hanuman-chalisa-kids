@@ -13,7 +13,7 @@ There are 43 pieces in order: two opening dohas, forty chaupais, and one closing
 
 Verses open in order. You can always go back to one you have already opened. Progress is stored in `localStorage` on the device. There are no accounts, ads, or analytics. After the first play, the app saves the sung verses on the device so they can play offline.
 
-Each verse has a transliteration, a short English meaning, and two pictures. Tap a picture for a short animation (under two seconds). The sound keeps playing.
+Each verse has a transliteration, a short English meaning, and four pictures that explain that meaning. On an iPad, two sit on the left and two on the right. Tap a picture for a short animation (under two seconds). The sound keeps playing.
 
 ## Develop
 

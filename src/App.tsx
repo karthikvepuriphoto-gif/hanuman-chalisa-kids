@@ -43,7 +43,7 @@ export function App() {
   const piece = pieces.find((item) => item.id === pieceId) ?? pieces[0]
   pieceRef.current = piece
   const openThrough = unlockedThrough(heardThrough, TOTAL)
-  const [leftScene, rightScene] = scenesFor(piece.id)
+  const tiles = scenesFor(piece.id)
 
   useEffect(() => {
     writeSave({ v: 1, heardThrough, pieceId, mode })
@@ -88,7 +88,10 @@ export function App() {
 
   useEffect(() => {
     const node = document.getElementById(`bead-${piece.id}`)
-    node?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' })
+    const row = node?.parentElement
+    if (!node || !row) return
+    const left = node.offsetLeft - row.clientWidth / 2 + node.clientWidth / 2
+    row.scrollTo({ left, behavior: 'smooth' })
   }, [piece.id])
 
   useEffect(() => {
@@ -249,7 +252,16 @@ export function App() {
         </p>
       )}
       <div className="stage min-h-0 flex-1">
-        <PictureButton side="left" idea={piece.pictureIdeas[0]} scene={leftScene} onTap={dismissCoach} />
+        <div className="story-sides">
+          <div className="tile-rail area-left">
+            <PictureButton side="left" idea={piece.pictureIdeas[0]} scene={tiles[0]} onTap={dismissCoach} />
+            <PictureButton side="left" idea={piece.pictureIdeas[1]} scene={tiles[1]} onTap={dismissCoach} />
+          </div>
+          <div className="tile-rail area-right">
+            <PictureButton side="right" idea={piece.pictureIdeas[2]} scene={tiles[2]} onTap={dismissCoach} />
+            <PictureButton side="right" idea={piece.pictureIdeas[3]} scene={tiles[3]} onTap={dismissCoach} />
+          </div>
+        </div>
         <section className="area-verse verse-card flex flex-col px-4 py-4 md:px-8 md:py-6" aria-live="polite">
           <p className="text-center text-sm font-extrabold uppercase tracking-wide text-saffron">
             {pieceLabel(piece)} · {piece.order} of {TOTAL}
@@ -324,7 +336,6 @@ export function App() {
             </button>
           )}
         </section>
-        <PictureButton side="right" idea={piece.pictureIdeas[1]} scene={rightScene} onTap={dismissCoach} />
       </div>
 
       <footer className="pt-3">
