@@ -1,7 +1,7 @@
 /* global self, caches, fetch, Response */
 // Cache full verse files, then answer Chrome/Safari range requests from that copy.
 // Workbox precaching does not satisfy media element Range headers.
-const AUDIO_CACHE = 'little-chalisa-audio-v2'
+const AUDIO_CACHE = 'little-chalisa-audio-v3'
 
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url)

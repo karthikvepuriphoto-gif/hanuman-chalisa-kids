@@ -51,3 +51,18 @@ node scripts/slice-audio.mjs /path/to/chalisa-full.m4a
 Pushes to `main` run `.github/workflows/pages.yml`, which builds with Vite and deploys to GitHub Pages. The Vite `base` is `/hanuman-chalisa-kids/`.
 
 In the repository settings, Pages should use **GitHub Actions** as the source.
+
+## Picture Book
+
+A third mode, **Picture Book**, has 44 pages: the cover, then doha 1, doha 2, chaupais 1–40 and the closing doha. Each page shows one full illustration, the verse in Devanagari (`src/data/devanagari.json`) and transliteration (from `pieces.json`), and a short kid-friendly meaning.
+
+- **Meanings** live in `src/data/bookText.json`. Edit them freely, using one or two short sentences per verse.
+- **Audio:** tap the verse box to hear that verse. The line being sung glows; there is no word timing, so the glow is estimated from line length. Turn on **Read to me** to play every page in order and turn the pages automatically. The cover has no sound. A single verse plays its half of the paired clip, using the per-verse split points in `src/data/verseTiming.json`, so no extra audio files are needed.
+- **Navigation:** swipe, use the big arrow buttons or the arrow keys, or drag the page slider.
+- **Art refresh:** after the source PNGs change, run:
+
+  ```sh
+  python3 scripts/build-book-art.py /workspace/chalisa-picture-book/art
+  ```
+
+  This reads only the top-level `<page>.png` files (never `print/`) and writes web versions, up to 1600 px wide, to `public/book/<page>.webp`. Also bump `chalisa-book-art-v1` in `vite.config.ts` so installed apps fetch the new pictures.

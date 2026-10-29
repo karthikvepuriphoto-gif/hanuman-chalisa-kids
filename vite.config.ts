@@ -31,6 +31,14 @@ export default defineConfig({
         navigateFallback: 'index.html',
         // Audio is cached by public/audio-cache.js so range requests still seek.
         importScripts: ['audio-cache.js'],
+        // Picture Book pages: cached as they are opened. Bump the name when art is refreshed.
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.includes('/book/') && url.pathname.endsWith('.webp'),
+            handler: 'StaleWhileRevalidate',
+            options: { cacheName: 'chalisa-book-art-v1', expiration: { maxEntries: 60 } },
+          },
+        ],
       },
     }),
   ],

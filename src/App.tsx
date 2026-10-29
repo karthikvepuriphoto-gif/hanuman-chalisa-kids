@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { PictureButton } from './components/PictureButton'
+import { PictureBook } from './components/PictureBook'
 import { audioUrl, pieceGroups, pieceIds, pieceLabel, pieces, appName, tagline } from './data/pieces'
 import {
   bumpHeard,
@@ -21,6 +22,13 @@ export function App() {
   const [hint, setHint] = useState('')
   const [finished, setFinished] = useState(false)
   const [audioError, setAudioError] = useState(false)
+  const [book, setBook] = useState(() => {
+    try {
+      return localStorage.getItem('little-chalisa-view') === 'book'
+    } catch {
+      return false
+    }
+  })
 
   // Two elements: the active one plays; in practice the standby one preloads the
   // next piece so 'ended' can hand over without a fresh load.
@@ -213,7 +221,22 @@ export function App() {
     startPlayback()
   }
 
+  function chooseBook(open: boolean) {
+    setBook(open)
+    try {
+      localStorage.setItem('little-chalisa-view', open ? 'book' : 'verses')
+    } catch {
+      /* fine */
+    }
+    if (open) {
+      elsRef.current.forEach((el) => el?.pause())
+      playingRef.current = false
+      setPlaying(false)
+    }
+  }
+
   function chooseMode(next: Mode) {
+    chooseBook(false)
     modeRef.current = next
     setMode(next)
     setFinished(false)
@@ -269,17 +292,25 @@ export function App() {
           <p className="mt-1 text-sm font-bold text-maroon/80 md:text-base">{tagline}</p>
         </div>
         <div className="mode-switch" role="tablist" aria-label="How to listen">
-          <button type="button" role="tab" aria-selected={mode === 'learn'} onClick={() => chooseMode('learn')}>
+          <button type="button" role="tab" aria-selected={!book && mode === 'learn'} onClick={() => chooseMode('learn')}>
             <span>Learn</span>
             <small>Again and again</small>
           </button>
-          <button type="button" role="tab" aria-selected={mode === 'practice'} onClick={() => chooseMode('practice')}>
+          <button type="button" role="tab" aria-selected={!book && mode === 'practice'} onClick={() => chooseMode('practice')}>
             <span>Practice</span>
             <small>All in a row</small>
+          </button>
+          <button type="button" role="tab" aria-selected={book} onClick={() => chooseBook(true)}>
+            <span>Picture Book</span>
+            <small>Turn the pages</small>
           </button>
         </div>
       </header>
 
+      {book ? (
+        <PictureBook />
+      ) : (
+      <>
       <div className="stage min-h-0 flex-1">
         <div className={`story-sides tiles-${piece.tiles.length}`}>
           {[piece.tiles.slice(0, piece.tiles.length / 2), piece.tiles.slice(piece.tiles.length / 2)].map((rail, side) => (
@@ -398,6 +429,8 @@ export function App() {
             : 'Verses open in order. Your place is saved only on this device.'}
         </p>
       </footer>
+      </>
+      )}
 
       {[0, 1].map((slot) => (
         <audio

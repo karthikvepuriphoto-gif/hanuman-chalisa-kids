@@ -80,6 +80,36 @@ if (c26[1] < 325 || c26[1] > 329) fail(`chaupai 26 should end near 5:27, got ${c
 
 console.log(`ok: ${TOTAL} pieces, audio ${c25[0].toFixed(2)}s–${c26[1].toFixed(2)}s for chaupais 25–26`)
 
+// Picture Book: 44 pages, each with web art, text, and (except the cover) a verse inside a clip.
+{
+  const read = (f) => JSON.parse(fs.readFileSync(new URL(`../src/data/${f}`, import.meta.url), 'utf8'))
+  const verses = ['doha-1', 'doha-2', ...Array.from({ length: 40 }, (_, i) => `chaupai-${i + 1}`), 'doha-close']
+  const bookText = read('bookText.json')
+  const dev = read('devanagari.json')
+  const vt = read('verseTiming.json')
+  const bookDir = new URL('../public/book/', import.meta.url)
+  const webps = fs.readdirSync(bookDir).filter((f) => f.endsWith('.webp'))
+  if (webps.length !== 44) fail(`expected 44 book images, found ${webps.length}`)
+  if (fs.readdirSync(bookDir).some((f) => !f.endsWith('.webp'))) fail('public/book should hold only .webp web images')
+  for (const page of ['cover', ...verses]) {
+    const file = new URL(`${page}.webp`, bookDir)
+    if (!fs.existsSync(file)) fail(`missing book art ${page}.webp`)
+    if (fs.statSync(file).size > 400 * 1024) fail(`${page}.webp is too large for the web`)
+  }
+  for (const v of verses) {
+    const m = bookText.verses[v]
+    if (!m || m.split(/[.!?]["”]?(\s|$)/).filter((x) => x && x.trim()).length > 3) fail(`book meaning for ${v} missing or too long`)
+    if (!dev[v] || dev[v].length !== 2) fail(`Devanagari for ${v} should be two lines`)
+    if (!vt[v]) fail(`verse timing missing for ${v}`)
+  }
+  for (const piece of pieces.filter((p) => p.from.length === 2)) {
+    const [s, e] = timing[piece.id]
+    const split = vt[piece.from[1]][0]
+    if (!(split > s + 4 && split < e - 4)) fail(`book split for ${piece.id} at ${split} is outside the clip`)
+  }
+  console.log('ok: picture book has 44 pages with art, text and verse audio')
+}
+
 function fail(message) {
   console.error(message)
   process.exit(1)

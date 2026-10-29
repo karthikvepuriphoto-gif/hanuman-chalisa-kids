@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "node --experimental-strip-types --test src/progress.test.ts src/art/scenes.test.ts && node scripts/check-content.mjs"
+    "test": "node --experimental-strip-types --test src/progress.test.ts src/art/scenes.test.ts src/bookPlan.test.ts && node scripts/check-content.mjs"
   },
   "dependencies": {
     "@fontsource/baloo-2": "^5.2.6",
