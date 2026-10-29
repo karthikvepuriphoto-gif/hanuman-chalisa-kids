@@ -3,7 +3,8 @@
  * Usage: node scripts/slice-audio.mjs /path/to/chalisa-full.m4a
  *
  * Bounds live in src/data/timing.json. They sit on quiet gaps in the
- * sung master (~8:36). Chaupais 25–26 are 305.80–327.05s (5:05.8–5:27.1).
+ * sung master (~8:36), one 4-line unit per piece plus a short breath.
+ * Chaupais 25–26 are 305.80–327.25s.
  */
 import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'

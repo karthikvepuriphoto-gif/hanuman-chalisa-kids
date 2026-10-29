@@ -28,7 +28,7 @@ await page.waitForSelector('.verse-lines')
 const title = await page.$eval('header p', (el) => el.textContent)
 if (!title?.includes('Hanuman Chalisa')) throw new Error(`title missing: ${title}`)
 const beads = await page.$$eval('.bead', (nodes) => nodes.length)
-if (beads !== 43) throw new Error(`expected 43 beads, got ${beads}`)
+if (beads !== 24) throw new Error(`expected 24 beads, got ${beads}`)
 const lines = await page.$$eval('.verse-lines p', (nodes) => nodes.map((n) => n.textContent))
 if (!lines[0]?.includes('Shri Guru')) throw new Error(`opening line missing: ${lines.join(' | ')}`)
 await shot('ipad-learn')
@@ -62,21 +62,27 @@ if (fitted.text.includes('Practice from the very start')) {
   throw new Error('start-over control showed up during Learn')
 }
 
+await page.click('.pic-btn')
+await page.waitForSelector('.pic-btn.is-lit')
+await shot('ipad-tap')
+const playingDuringTap = await page.$eval('audio[data-active]', (audio) => !audio.paused)
+if (playingDuringTap) throw new Error('tap started audio by itself')
+
 await page.click('.play-btn')
 await page.waitForFunction(() => {
-  const audio = document.querySelector('audio')
+  const audio = document.querySelector('audio[data-active]')
   return audio && audio.currentTime > 0.2 && !audio.paused
 })
-const loop = await page.$eval('audio', (audio) => audio.loop)
+const loop = await page.$eval('audio[data-active]', (audio) => audio.loop)
 if (!loop) throw new Error('learn mode should loop')
 await shot('ipad-playing')
 
 await page.waitForFunction(() => {
-  const audio = document.querySelector('audio')
+  const audio = document.querySelector('audio[data-active]')
   return audio && audio.seekable.length > 0 && audio.seekable.end(0) > 5
 })
 await page.evaluate(() => {
-  const audio = document.querySelector('audio')
+  const audio = document.querySelector('audio[data-active]')
   audio.currentTime = audio.seekable.end(0) - 0.3
 })
 await page.waitForFunction(() => {
@@ -88,39 +94,39 @@ if (hintOrOpen !== 'bead-doha-1') throw new Error(`left the first verse early: $
 
 await page.click('[aria-label="Next verse"]')
 await page.waitForFunction(() => document.querySelector('.verse-lines')?.textContent?.includes('Budhi Heen'))
-const secondSrc = await page.$eval('audio', (audio) => audio.dataset.id)
+const secondSrc = await page.$eval('audio[data-active]', (audio) => audio.dataset.id)
 if (secondSrc !== 'doha-2') throw new Error(`expected doha-2, got ${secondSrc}`)
 await shot('ipad-verse-2')
 
 await page.click('[aria-label="How to listen"] button:nth-child(2)')
 await page.waitForFunction(() => document.querySelector('[aria-selected="true"]')?.textContent?.includes('Practice'))
-const practiceLoop = await page.$eval('audio', (audio) => audio.loop)
+const practiceLoop = await page.$eval('audio[data-active]', (audio) => audio.loop)
 if (practiceLoop) throw new Error('practice should not loop')
 const stillLearnCopy = await page.evaluate(() => document.body.innerText.includes('Practice from the very start'))
 if (!stillLearnCopy) throw new Error('practice-from-start control missing')
-const paused = await page.$eval('audio', (audio) => audio.paused)
+const paused = await page.$eval('audio[data-active]', (audio) => audio.paused)
 if (paused) await page.click('.play-btn')
 await page.waitForFunction(() => {
-  const audio = document.querySelector('audio')
+  const audio = document.querySelector('audio[data-active]')
   return audio && Number.isFinite(audio.duration) && audio.duration > 1 && !audio.paused
 })
 await page.waitForFunction(() => {
-  const audio = document.querySelector('audio')
+  const audio = document.querySelector('audio[data-active]')
   return audio && !audio.paused && audio.seekable.length > 0 && audio.seekable.end(0) > 5
 })
 await page.evaluate(() => {
-  const audio = document.querySelector('audio')
+  const audio = document.querySelector('audio[data-active]')
   const end = audio.seekable.end(audio.seekable.length - 1)
   audio.currentTime = Math.max(0, end - 0.3)
 })
-await page.waitForFunction(() => document.querySelector('audio')?.dataset.id === 'chaupai-1', { timeout: 8000 })
+await page.waitForFunction(() => document.querySelector('audio[data-active]')?.dataset.id === 'chaupai-1-2', { timeout: 8000 })
 await page.waitForFunction(() => document.querySelector('.verse-lines')?.textContent?.includes('Jai Hanuman'))
 await shot('ipad-practice-advance')
 
 await page.evaluate(() => {
   localStorage.setItem(
     'little-chalisa-v1',
-    JSON.stringify({ v: 1, heardThrough: 42, pieceId: 'doha-close', mode: 'learn' }),
+    JSON.stringify({ v: 2, heardThrough: 23, pieceId: 'doha-close', mode: 'learn' }),
   )
 })
 await page.reload({ waitUntil: 'networkidle0' })
@@ -128,32 +134,57 @@ await page.waitForFunction(() => document.querySelector('.verse-lines')?.textCon
 await shot('ipad-closing')
 
 for (const [id, file] of [
-  ['chaupai-9', 'ipad-chaupai-9'],
-  ['chaupai-11', 'ipad-chaupai-11'],
-  ['chaupai-18', 'ipad-chaupai-18'],
-  ['chaupai-25', 'ipad-chaupai-25'],
+  ['chaupai-9-10', 'ipad-chaupai-9-10'],
+  ['chaupai-11-12', 'ipad-chaupai-11-12'],
+  ['chaupai-17-18', 'ipad-chaupai-17-18'],
+  ['chaupai-25-26', 'ipad-chaupai-25-26'],
 ]) {
   await page.evaluate((pieceId) => {
     localStorage.setItem(
       'little-chalisa-v1',
-      JSON.stringify({ v: 1, heardThrough: 43, pieceId, mode: 'learn' }),
+      JSON.stringify({ v: 2, heardThrough: 24, pieceId, mode: 'learn' }),
     )
   }, id)
   await page.reload({ waitUntil: 'networkidle0' })
   await page.waitForFunction(
-    (pieceId) => document.querySelector('audio')?.dataset.id === pieceId,
+    (pieceId) => document.querySelector('audio[data-active]')?.dataset.id === pieceId,
     {},
     id,
   )
   await shot(file)
 }
 
+// A paired chaupai shows both verses' stills: 4 on each side, first verse on the left.
+await page.evaluate(() => {
+  localStorage.setItem('little-chalisa-v1', JSON.stringify({ v: 2, heardThrough: 24, pieceId: 'chaupai-1-2', mode: 'learn' }))
+})
+await page.reload({ waitUntil: 'networkidle0' })
+await page.waitForFunction(() => document.querySelectorAll('.pic-btn').length === 8)
+const pair = await page.evaluate(() => {
+  const pics = [...document.querySelectorAll('.pic-btn')].map((el) => {
+    const r = el.getBoundingClientRect()
+    return { x: r.x, w: r.width, h: r.height, src: el.querySelector('img')?.getAttribute('src') ?? '' }
+  })
+  return { pics, innerWidth: window.innerWidth, scrollWidth: document.documentElement.scrollWidth }
+})
+const left = pair.pics.filter((pic) => pic.x < pair.innerWidth / 2)
+if (left.length !== 4 || !left.every((pic) => pic.src.includes('chaupai-1-'))) {
+  throw new Error(`pair left rail should hold chaupai 1 stills ${JSON.stringify(pair.pics)}`)
+}
+if (!pair.pics.slice(4).every((pic) => pic.src.includes('chaupai-2-'))) throw new Error('pair right rail should hold chaupai 2 stills')
+if (pair.pics.some((pic) => pic.w < 90 || pic.h < 90)) throw new Error(`pair tiles too small ${JSON.stringify(pair.pics)}`)
+if (pair.scrollWidth > pair.innerWidth + 2) throw new Error('pair layout overflows')
+await shot('ipad-pair')
+
 await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2 })
 await page.evaluate(() => localStorage.clear())
 await page.reload({ waitUntil: 'networkidle0' })
 await page.waitForSelector('.verse-lines')
 const phone = await page.evaluate(() => {
-  const pics = [...document.querySelectorAll('.pic-btn')].map((el) => el.getBoundingClientRect())
+  const pics = [...document.querySelectorAll('.pic-btn')].map((el) => {
+    const r = el.getBoundingClientRect()
+    return { x: r.x, y: r.y, w: r.width, h: r.height, bottom: r.bottom }
+  })
   const play = document.querySelector('.play-btn')?.getBoundingClientRect()
   return { pics, playTop: play?.top ?? 0, scrollWidth: document.documentElement.scrollWidth, innerWidth: window.innerWidth }
 })

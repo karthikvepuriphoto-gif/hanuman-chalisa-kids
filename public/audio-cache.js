@@ -1,7 +1,7 @@
 /* global self, caches, fetch, Response */
 // Cache full verse files, then answer Chrome/Safari range requests from that copy.
 // Workbox precaching does not satisfy media element Range headers.
-const AUDIO_CACHE = 'little-chalisa-audio-v1'
+const AUDIO_CACHE = 'little-chalisa-audio-v2'
 
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url)
@@ -50,3 +50,14 @@ async function serveAudio(request) {
     },
   })
 }
+
+// Drop older verse caches (v1 held the 43 single-chaupai clips).
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(keys.filter((key) => key.startsWith('little-chalisa-audio-') && key !== AUDIO_CACHE).map((key) => caches.delete(key))),
+      ),
+  )
+})

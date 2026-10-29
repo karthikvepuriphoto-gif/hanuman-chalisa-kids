@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { PictureButton } from './components/PictureButton'
-import { audioUrl, pieceIds, pieceLabel, pieces, appName, tagline, tileUrl } from './data/pieces'
+import { audioUrl, pieceGroups, pieceIds, pieceLabel, pieces, appName, tagline } from './data/pieces'
 import {
   bumpHeard,
   loadSave,
@@ -12,7 +12,7 @@ import {
 const TOTAL = pieces.length
 
 export function App() {
-  const initial = useRef(loadSave(pieceIds)).current
+  const initial = useRef(loadSave(pieceIds, pieceGroups)).current
   const [heardThrough, setHeardThrough] = useState(initial.heardThrough)
   const [pieceId, setPieceId] = useState(initial.pieceId)
   const [mode, setMode] = useState<Mode>(initial.mode)
@@ -22,7 +22,16 @@ export function App() {
   const [finished, setFinished] = useState(false)
   const [audioError, setAudioError] = useState(false)
 
-  const audioRef = useRef<HTMLAudioElement>(null)
+  // Two elements: the active one plays; in practice the standby one preloads the
+  // next piece so 'ended' can hand over without a fresh load.
+  const elsRef = useRef<(HTMLAudioElement | null)[]>([null, null])
+  const activeRef = useRef(0)
+  const audioRef = {
+    get current(): HTMLAudioElement | null {
+      return elsRef.current[activeRef.current]
+    },
+  }
+  const standby = () => elsRef.current[1 - activeRef.current]
   const heardRef = useRef(heardThrough)
   const modeRef = useRef(mode)
   const playingRef = useRef(playing)
@@ -36,7 +45,7 @@ export function App() {
   const openThrough = unlockedThrough(heardThrough, TOTAL)
 
   useEffect(() => {
-    writeSave({ v: 1, heardThrough, pieceId, mode })
+    writeSave({ v: 2, heardThrough, pieceId, mode })
   }, [heardThrough, pieceId, mode])
 
   useEffect(() => {
@@ -45,6 +54,7 @@ export function App() {
     audio.src = audioUrl(piece.id)
     audio.dataset.id = piece.id
     audio.loop = modeRef.current === 'learn'
+    audio.dataset.active = 'true'
     audio.load()
     // Mount only. Later piece changes go through the gesture handlers.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,10 +130,49 @@ export function App() {
     if (!audio) return
     playingRef.current = true
     setPlaying(true)
+    const go = () =>
+      audio.play().catch(() => {
+        playingRef.current = false
+        setPlaying(false)
+      })
+    if (audio.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      void go()
+      return
+    }
+    // Start promptly (keeps the gesture on iOS); if the browser refuses before
+    // data arrives, try once more when it can play.
     audio.play().catch(() => {
-      playingRef.current = false
-      setPlaying(false)
+      audio.addEventListener('canplay', () => void go(), { once: true })
     })
+  }
+
+  /** Practice only: load the following piece into the standby element. */
+  function preloadNext() {
+    if (modeRef.current !== 'practice') return
+    const order = pieceRef.current.order
+    if (order >= TOTAL) return
+    const spare = standby()
+    if (!spare) return
+    const nextId = pieces[order].id
+    if (spare.dataset.id === nextId) return
+    spare.src = audioUrl(nextId)
+    spare.dataset.id = nextId
+    spare.loop = false
+    spare.preload = 'auto'
+    spare.load()
+  }
+
+  /** Make the standby element active if it already holds this piece. */
+  function swapTo(nextId: string): boolean {
+    const spare = standby()
+    const current = audioRef.current
+    if (!spare || spare.dataset.id !== nextId) return false
+    current?.pause()
+    if (current) delete current.dataset.active
+    activeRef.current = 1 - activeRef.current
+    spare.dataset.active = 'true'
+    spare.currentTime = 0
+    return true
   }
 
   function goTo(order: number, autoplay: boolean) {
@@ -143,6 +192,10 @@ export function App() {
     pieceRef.current = next
     setPieceId(next.id)
     setFinished(false)
+    if (!(autoplay && modeRef.current === 'practice' && swapTo(next.id))) {
+      // The standby may hold another piece; make sure it stays quiet.
+      standby()?.pause()
+    }
     prepare(next.id)
     if (autoplay || playingRef.current) startPlayback()
   }
@@ -173,6 +226,7 @@ export function App() {
     if (!audio || audio.dataset.id !== pieceRef.current.id) return
     if (!audio.duration || !Number.isFinite(audio.duration)) return
     setRatio(audio.currentTime / audio.duration)
+    if (audio.currentTime > 1) preloadNext()
     if (modeRef.current === 'learn' && audio.currentTime >= audio.duration * 0.9) {
       noteHeard(pieceRef.current.order)
     }
@@ -227,15 +281,19 @@ export function App() {
       </header>
 
       <div className="stage min-h-0 flex-1">
-        <div className="story-sides">
-          <div className="tile-rail area-left">
-            <PictureButton side="left" idea={piece.pictureIdeas[0]} src={tileUrl(piece.id, 0)} />
-            <PictureButton side="left" idea={piece.pictureIdeas[1]} src={tileUrl(piece.id, 1)} />
-          </div>
-          <div className="tile-rail area-right">
-            <PictureButton side="right" idea={piece.pictureIdeas[2]} src={tileUrl(piece.id, 2)} />
-            <PictureButton side="right" idea={piece.pictureIdeas[3]} src={tileUrl(piece.id, 3)} />
-          </div>
+        <div className={`story-sides tiles-${piece.tiles.length}`}>
+          {[piece.tiles.slice(0, piece.tiles.length / 2), piece.tiles.slice(piece.tiles.length / 2)].map((rail, side) => (
+            <div key={side} className={`tile-rail ${side === 0 ? 'area-left' : 'area-right'}`}>
+              {rail.map((tile) => (
+                <PictureButton
+                  key={`${piece.id}-${tile.verse}-${tile.index}`}
+                  side={side === 0 ? 'left' : 'right'}
+                  idea={tile.idea}
+                  src={tile.src}
+                />
+              ))}
+            </div>
+          ))}
         </div>
         <section className="area-verse verse-card flex flex-col px-4 py-4 md:px-8 md:py-6" aria-live="polite">
           <p className="text-center text-sm font-extrabold uppercase tracking-wide text-saffron">
@@ -336,19 +394,24 @@ export function App() {
         </div>
         <p className="pb-1 text-center text-xs font-bold text-maroon/60">
           {heardThrough === TOTAL
-            ? 'All 43 verses are open. Your place is saved only on this device.'
+            ? `All ${TOTAL} verses are open. Your place is saved only on this device.`
             : 'Verses open in order. Your place is saved only on this device.'}
         </p>
       </footer>
 
-      <audio
-        ref={audioRef}
-        preload="auto"
-        playsInline
-        onTimeUpdate={onTime}
-        onEnded={onEnded}
-        onError={() => setAudioError(true)}
-      />
+      {[0, 1].map((slot) => (
+        <audio
+          key={slot}
+          ref={(node) => {
+            elsRef.current[slot] = node
+          }}
+          preload="auto"
+          playsInline
+          onTimeUpdate={(event) => event.currentTarget === audioRef.current && onTime()}
+          onEnded={(event) => event.currentTarget === audioRef.current && onEnded()}
+          onError={(event) => event.currentTarget === audioRef.current && setAudioError(true)}
+        />
+      ))}
     </div>
   )
 }

@@ -11,21 +11,26 @@ if (!canProbe) {
 const root = path.resolve(import.meta.dirname, '..')
 const pieces = JSON.parse(fs.readFileSync(path.join(root, 'src/data/pieces.json'), 'utf8')).pieces
 const timing = JSON.parse(fs.readFileSync(path.join(root, 'src/data/timing.json'), 'utf8'))
-const scenes = fs.readFileSync(path.join(root, 'src/art/scenes.ts'), 'utf8')
 
-if (pieces.length !== 43) fail(`expected 43 pieces, found ${pieces.length}`)
+const TOTAL = 24
+if (pieces.length !== TOTAL) fail(`expected ${TOTAL} pieces, found ${pieces.length}`)
 
 const ids = new Set()
 for (const piece of pieces) {
   if (ids.has(piece.id)) fail(`duplicate id ${piece.id}`)
   ids.add(piece.id)
   if (!piece.lines?.length || !piece.meaning) fail(`missing text for ${piece.id}`)
-  if (piece.pictureIdeas?.length !== 4) fail(`need four picture ideas for ${piece.id}`)
+  const verses = piece.from ?? [piece.id]
+  if (piece.pictureIdeas?.length !== verses.length * 4) fail(`need four picture ideas per verse for ${piece.id}`)
+  for (const verse of verses) {
+    for (let i = 0; i < 4; i += 1) {
+      if (!fs.existsSync(path.join(root, 'public/art/tiles', `${verse}-${i}.webp`))) fail(`missing still ${verse}-${i}`)
+    }
+  }
   const span = timing[piece.id]
   if (!span) fail(`missing timing for ${piece.id}`)
   const duration = span[1] - span[0]
   if (duration < 9.5 || duration > 26) fail(`${piece.id} duration ${duration.toFixed(2)}s is outside 9.5–26s`)
-  if (!scenes.includes(`'${piece.id}'`)) fail(`storyboard missing ${piece.id}`)
   const audioPath = path.join(root, 'public/audio', `${piece.id}.m4a`)
   if (!fs.existsSync(audioPath)) fail(`missing audio file ${piece.id}`)
   if (!canProbe) continue
@@ -48,21 +53,32 @@ for (const piece of pieces) {
 }
 
 const orders = pieces.map((piece) => piece.order)
-for (let n = 1; n <= 43; n += 1) {
+for (let n = 1; n <= TOTAL; n += 1) {
   if (!orders.includes(n)) fail(`missing order ${n}`)
 }
 const tiles = fs.readdirSync(path.join(root, 'public/art/tiles')).filter((name) => name.endsWith('.webp'))
 if (tiles.length !== 172) fail(`expected 172 story tiles, found ${tiles.length}`)
 
 if (pieces.filter((piece) => piece.kind === 'doha').length !== 3) fail('expected 3 dohas')
-if (pieces.filter((piece) => piece.kind === 'chaupai').length !== 40) fail('expected 40 chaupais')
+if (pieces.filter((piece) => piece.kind === 'chaupai').length !== 21) fail('expected 21 chaupai pieces')
+const covered = pieces.flatMap((piece) => piece.from ?? [piece.id]).filter((id) => id.startsWith('chaupai-'))
+for (let n = 1; n <= 40; n += 1) {
+  if (!covered.includes(`chaupai-${n}`)) fail(`chaupai ${n} is not in any piece`)
+}
+const ordered = pieces.slice().sort((a, b) => a.order - b.order)
+for (let i = 1; i < ordered.length; i += 1) {
+  const prev = timing[ordered[i - 1].id]
+  const next = timing[ordered[i].id]
+  if (next[0] < prev[1]) fail(`${ordered[i - 1].id} overlaps ${ordered[i].id}`)
+}
 
-const c25 = timing['chaupai-25']
-const c26 = timing['chaupai-26']
+const c25 = timing['chaupai-25-26']
+const c26 = c25
+if (!c25) fail('missing chaupai-25-26')
 if (c25[0] < 304 || c25[0] > 307) fail(`chaupai 25 should start near 5:05, got ${c25[0]}`)
 if (c26[1] < 325 || c26[1] > 329) fail(`chaupai 26 should end near 5:27, got ${c26[1]}`)
 
-console.log(`ok: 43 pieces, audio ${c25[0].toFixed(2)}s–${c26[1].toFixed(2)}s for chaupais 25–26`)
+console.log(`ok: ${TOTAL} pieces, audio ${c25[0].toFixed(2)}s–${c26[1].toFixed(2)}s for chaupais 25–26`)
 
 function fail(message) {
   console.error(message)
